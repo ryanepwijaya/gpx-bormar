@@ -168,7 +168,9 @@ let map, cursorMk, selLine, tiles; const classLines = [];
 function initMap() {
   const el = $('#map');
   if (!window.L) { el.innerHTML = '<p style="padding:20px">Peta gagal dimuat. Grafik elevasi tetap bisa dipakai.</p>'; return; }
-  map = L.map(el, { zoomControl: true, scrollWheelZoom: false, attributionControl: true });
+  const touch = matchMedia('(pointer: coarse)').matches;
+  map = L.map(el, { zoomControl: true, scrollWheelZoom: false, attributionControl: true, dragging: !touch, tap: false, touchZoom: !touch, doubleClickZoom: !touch });
+  if (touch) setupMapLock();
   setTiles();
   const ll = KM.map((_, k) => [LAT[k], LON[k]]);
   L.polyline(ll, { color: '#16161A', weight: 9, opacity: .28, interactive: false }).addTo(map);
@@ -193,6 +195,12 @@ function initMap() {
   on('hl', () => classLines.forEach(pl => pl.setStyle({ opacity: (!S.hl || S.hl === pl._cls) ? 1 : .15 })));
   setTimeout(() => map.invalidateSize(), 300);
 }
+function setupMapLock() {
+  const b = $('#btnLock'); b.hidden = false; let unlocked = false;
+  const apply = () => { const f = unlocked ? 'enable' : 'disable'; map.dragging[f](); map.touchZoom[f](); map.doubleClickZoom[f](); b.textContent = unlocked ? '🔓 Peta aktif' : '🔒 Geser peta'; b.setAttribute('aria-pressed', unlocked); $('#map').classList.toggle('locked', !unlocked); };
+  b.addEventListener('click', () => { unlocked = !unlocked; apply(); toast(unlocked ? 'Peta bisa digeser & di-zoom. Ketuk lagi untuk kunci.' : 'Peta dikunci, halaman bisa di-scroll.'); });
+  apply();
+}
 function setTiles() {
   if (!map) return; if (tiles) map.removeLayer(tiles);
   const style = isDark() ? 'dark_all' : 'rastertiles/voyager';
@@ -207,6 +215,7 @@ let dragging = false;
 elev.addEventListener('pointerdown', e => { dragging = true; stopPlay(); setCur(kmFromEvent(elev, elevO, e), 'chart'); });
 elev.addEventListener('pointermove', e => { if (dragging || e.pointerType === 'mouse') setCur(kmFromEvent(elev, elevO, e), 'chart'); });
 window.addEventListener('pointerup', () => dragging = false);
+elev.addEventListener('pointercancel', () => dragging = false);
 document.querySelectorAll('[data-scale]').forEach(b => b.addEventListener('click', () => {
   S.scale = b.dataset.scale; document.querySelectorAll('[data-scale]').forEach(x => x.classList.toggle('on', x === b));
   $('#scaleHint').textContent = S.scale === 'real' ? 'Sumbu tinggi mulai 0 m, beda tinggi terlihat apa adanya.' : 'Sumbu tinggi diperbesar supaya lekukan kecil terlihat. Aslinya jauh lebih landai.';
@@ -419,11 +428,11 @@ let tt; function toast(m) { const t = $('#toast'); t.textContent = m; t.classLis
 $('#mRaw').textContent = R.meta.rawPoints.toLocaleString('id-ID'); $('#mLen').textContent = R.meta.gpxLengthKm.toFixed(2).replace('.', ','); $('#mRawGain').textContent = Math.round(R.meta.rawGain);
 // nav highlight
 const secs = [...document.querySelectorAll('main section[id]')]; const links = [...document.querySelectorAll('.chips a')];
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === `#${e.target.id}`)); const a = links.find(a => a.classList.contains('on')); a && a.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } }), { rootMargin: '-45% 0px -50% 0px' });
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === `#${e.target.id}`)); const a = links.find(a => a.classList.contains('on')); if (a) { const strip = a.parentElement; strip.scrollTo({ left: a.offsetLeft - strip.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' }); } } }), { rootMargin: '-45% 0px -50% 0px' });
 secs.forEach(s => io.observe(s));
 
 function renderAllStatic() { buildLegend(); renderClimbs(); renderComp(); renderGrade(); renderHeights(); renderKm(); renderTimeline(); drawHero(1); drawElev(); renderSeg('init'); calc(); }
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { drawHero(1); drawElev(); renderSeg('resize'); calc(); renderKm(); renderHeights(); }, 120); });
+let rz, lastW = window.innerWidth; window.addEventListener('resize', () => { if (window.innerWidth === lastW) return; lastW = window.innerWidth; clearTimeout(rz); rz = setTimeout(() => { drawHero(1); drawElev(); renderSeg('resize'); calc(); renderKm(); renderHeights(); }, 120); });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); setTiles(); classLines.forEach(pl => pl.setStyle({ color: clsColor(pl._cls) })); renderAllStatic(); });
 
 // init

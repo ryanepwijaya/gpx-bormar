@@ -32,7 +32,8 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-padding-top:72px}
+@media (prefers-reduced-motion:no-preference){html:focus-within{scroll-behavior:smooth}}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,svg,canvas{max-width:100%}
 a{color:inherit}
@@ -250,7 +251,7 @@ td.num,th.num{text-align:right}
 /* responsive */
 @media (max-width:900px){
   .explorer{grid-template-columns:1fr;grid-template-areas:"map" "readout" "chart"}
-  .map-card{min-height:0;height:58vh;max-height:520px}
+  .map-card{min-height:0;height:420px}
   .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
   .seg-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
   .calc{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -278,3 +279,7 @@ td.num,th.num{text-align:right}
 .km-svg{height:auto}
 .desc,.readout,.km-detail{border:1px solid var(--line)}
 .desc.on{border-color:var(--blue-2)}
+
+#map.locked{touch-action:pan-y}
+#map.locked .leaflet-control-zoom{opacity:.5}
+.elev,.seg-chart,.pace-chart,.km-svg{overscroll-behavior:auto}
