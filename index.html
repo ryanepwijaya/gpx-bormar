@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GPX Bormar — Bedah Rute Borobudur Marathon FM</title>
+<meta name="description" content="Ulasan interaktif A–Z rute full marathon Borobudur Marathon dari file GPX: peta, profil elevasi, 4 tanjakan utama, kemiringan, cut-off time, dan kalkulator pacing.">
+<meta property="og:title" content="GPX Bormar — Bedah Rute Borobudur Marathon FM">
+<meta property="og:description" content="Peta, elevasi, tanjakan, COT, dan kalkulator pacing rute FM Bormar. Interaktif & ramah HP.">
+<meta name="theme-color" content="#16161A">
+<link rel="preload" href="fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316161A'/%3E%3Cpath d='M6 46 L18 34 L26 40 L38 20 L46 30 L58 22' fill='none' stroke='%23FC4C02' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top"><span class="brand-mark"></span>GPX<b>BORMAR</b></a>
+  <nav class="chips" aria-label="Navigasi bagian">
+    <a href="#ringkas">Ringkas</a>
+    <a href="#peta">Peta</a>
+    <a href="#segmen">Segmen</a>
+    <a href="#tanjakan">Tanjakan</a>
+    <a href="#kemiringan">Kemiringan</a>
+    <a href="#perkm">Per km</a>
+    <a href="#cot">COT</a>
+    <a href="#pacing">Pacing</a>
+    <a href="#strategi">Strategi</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="wrap hero-inner">
+    <p class="kicker">Borobudur Marathon · Full Marathon 42.195 km</p>
+    <h1>Bedah rute <span>dari A sampai Z</span></h1>
+    <p class="lede">Satu file GPX, dibedah tuntas: di mana naiknya, seberapa curam, setinggi apa, kapan cut-off, dan bagaimana mengatur pace. Semua grafik bisa disentuh, digeser, dan dipilih.</p>
+    <div class="hero-stats">
+      <div><b data-count="243" id="hsGain">0</b><i>m</i><span>total naik</span></div>
+      <div><b data-count="298" id="hsHi">0</b><i>m</i><span>titik tertinggi</span></div>
+      <div><b data-count="69" id="hsRange">0</b><i>m</i><span>selisih tinggi–rendah</span></div>
+      <div><b data-count="4">0</b><i>&nbsp;</i><span>tanjakan utama</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#peta">Jelajahi peta &amp; elevasi</a>
+      <a class="btn btn-ghost" href="#pacing">Hitung pacing-ku</a>
+    </div>
+  </div>
+</section>
+
+<!-- RINGKAS -->
+<section id="ringkas" class="sec">
+  <div class="wrap">
+    <p class="kicker">A · Ringkasan 30 detik</p>
+    <h2>Rute ini <em>bergelombang landai</em>, bukan berbukit terjal</h2>
+    <p class="sub">Kalau cuma sempat baca satu bagian, baca ini.</p>
+    <div class="facts">
+      <article class="fact c-orange"><b>243 m</b><span>Total naik sepanjang 42 km, dan turunnya sama persis karena start dan finish di titik yang sama.</span></article>
+      <article class="fact c-blue"><b>±1%</b><span>Rata-rata kemiringan tanjakan utama. Setara treadmill incline 1.</span></article>
+      <article class="fact c-red"><b>3.9%</b><span>Bagian paling curam: ±200 m di awal T2, persis sesudah titik HALF (km ±21.9).</span></article>
+      <article class="fact c-amber"><b>km 10–14</b><span>T1, tanjakan terpanjang (4 km, +45 m), berakhir di titik tertinggi rute.</span></article>
+      <article class="fact c-teal"><b>km 36–41</b><span>T4: naiknya cuma 0.5%, tapi 5.5 km di ujung lomba. Berat di mental, bukan di kemiringan.</span></article>
+      <article class="fact c-ink"><b>6:30</b><span>Batas finish dihitung dari start wave terakhir (04:30), jadi finish ditutup 11:00 WIB.</span></article>
+    </div>
+  </div>
+</section>
+
+<!-- PETA + ELEVASI -->
+<section id="peta" class="sec sec-tint">
+  <div class="wrap">
+    <p class="kicker">B · Peta &amp; profil elevasi</p>
+    <h2>Geser jarimu di grafik, <em>titik di peta ikut bergerak</em></h2>
+    <p class="sub">Warna garis = kemiringan. Ketuk peta untuk lompat ke titik itu. Tekan ▶ untuk “lari” virtual sepanjang rute.</p>
+
+    <div class="explorer">
+      <div class="map-card">
+        <div id="map" role="application" aria-label="Peta rute"></div>
+        <div class="map-tools">
+          <button class="pill" id="btnPlay" aria-label="Putar simulasi">▶ Putar</button>
+          <button class="pill" id="btnFollow" aria-pressed="true">Ikuti titik</button>
+          <button class="pill" id="btnFit">Seluruh rute</button>
+        </div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite">
+        <div><span>KM</span><b id="roKm">0.0</b></div>
+        <div><span>ELEVASI</span><b id="roEle">247 m</b></div>
+        <div><span>KEMIRINGAN</span><b id="roGr">0.0%</b></div>
+        <div class="ro-wide"><span>BAGIAN</span><b id="roSeg">Start</b></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <div class="seg-toggle" role="tablist" aria-label="Skala vertikal">
+            <button role="tab" class="on" data-scale="real">Skala landai (dari 0 m)</button>
+            <button role="tab" data-scale="detail">Skala detail</button>
+          </div>
+          <span class="hint" id="scaleHint">Sumbu tinggi mulai 0 m, beda tinggi terlihat apa adanya.</span>
+        </div>
+        <canvas id="elev" class="elev" aria-label="Grafik elevasi interaktif"></canvas>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEGMEN -->
+<section id="segmen" class="sec">
+  <div class="wrap">
+    <p class="kicker">C · Pilih segmenmu sendiri</p>
+    <h2>Mau tahu km 25–30 naik berapa? <em>Geser saja.</em></h2>
+    <p class="sub">Pilih awal dan akhir, atau ketuk tombol pintas. Peta dan grafik di atas ikut menyorot.</p>
+    <div class="presets" id="presets"></div>
+    <div class="range2">
+      <div class="range-track"><div class="range-fill" id="rangeFill"></div></div>
+      <input type="range" id="rA" min="0" max="42.195" step="0.05" value="10.3" aria-label="Awal segmen">
+      <input type="range" id="rB" min="0" max="42.195" step="0.05" value="14.3" aria-label="Akhir segmen">
+    </div>
+    <div class="range-labels"><span id="lblA">km 10.3</span><span id="lblB">km 14.3</span></div>
+    <canvas id="segChart" class="seg-chart"></canvas>
+    <div class="seg-stats" id="segStats"></div>
+  </div>
+</section>
+
+<!-- TANJAKAN -->
+<section id="tanjakan" class="sec sec-tint">
+  <div class="wrap">
+    <p class="kicker">D · Empat tanjakan utama</p>
+    <h2>Kenalan dengan <em>T1, T2, T3, T4</em></h2>
+    <p class="sub">Ketuk kartu untuk menyorotnya di peta. Waktu tempuh dihitung untuk pace sekitar 8:00/km.</p>
+    <div class="climbs" id="climbs"></div>
+
+    <h3 class="h3">Turunan kunci: tempat ambil napas</h3>
+    <div class="descents" id="descents"></div>
+  </div>
+</section>
+
+<!-- KEMIRINGAN -->
+<section id="kemiringan" class="sec">
+  <div class="wrap">
+    <p class="kicker">E · Seberapa curam, setinggi apa</p>
+    <h2>Biar <em>kebayang</em>, bukan biar takut</h2>
+
+    <div class="grid2">
+      <div class="card">
+        <h3 class="h3">Komposisi medan</h3>
+        <p class="small">Ketuk satu warna untuk menyorot bagian itu di peta &amp; grafik.</p>
+        <div class="comp" id="comp"></div>
+        <div class="comp-legend" id="compLegend"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="h3">Mainkan kemiringannya</h3>
+        <p class="small">Segitiga di bawah digambar <b>skala asli</b>: lari 100 m, naik sekian meter.</p>
+        <input type="range" id="gSlider" min="0" max="10" step="0.1" value="1" aria-label="Kemiringan">
+        <svg id="gSvg" viewBox="0 0 400 60" preserveAspectRatio="none" class="g-svg"></svg>
+        <div class="g-out" id="gOut"></div>
+      </div>
+    </div>
+
+    <div class="card mt">
+      <h3 class="h3">Setinggi apa sih tanjakannya?</h3>
+      <p class="small">Total naik tiap tanjakan dibandingkan Candi Borobudur (±35 m) dan gedung (±3 m per lantai). Ketuk batangnya.</p>
+      <svg id="hSvg" class="h-svg"></svg>
+      <p class="note" id="hNote">Total naik 243 m ≈ 81 lantai ≈ hampir 7× tinggi Borobudur, tapi dicicil sepanjang 42 km.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PER KM -->
+<section id="perkm" class="sec sec-tint">
+  <div class="wrap">
+    <p class="kicker">F · Kilometer demi kilometer</p>
+    <h2>Naik &amp; turun <em>tiap km</em></h2>
+    <p class="sub">Batang ke atas = meter naik, ke bawah = meter turun. Ketuk satu km untuk detailnya.</p>
+    <svg id="kmSvg" class="km-svg"></svg>
+    <div class="km-detail" id="kmDetail"></div>
+    <details class="table-wrap">
+      <summary>Lihat tabel lengkap 42 km</summary>
+      <div class="scroll-x"><table id="kmTable"></table></div>
+    </details>
+  </div>
+</section>
+
+<!-- COT -->
+<section id="cot" class="sec">
+  <div class="wrap">
+    <p class="kicker">G · Cut-off time (COT)</p>
+    <h2>Dihitung pakai <em>jam dinding</em>, bukan jam tanganmu</h2>
+    <p class="sub">Semua wave memakai jam lomba yang sama, dan batasnya dihitung dari start Wave 4 (04:30 WIB). Jadi makin awal wave-mu, makin longgar waktumu.</p>
+    <div class="wave-pick" id="wavePick"></div>
+    <div class="scroll-x"><table class="cot-table" id="cotTable"></table></div>
+    <p class="note">Sumber: unggahan resmi @borobudur.marathon. Lewat satu cut-off = DNF, ada shuttle bus kembali ke Race Village.</p>
+  </div>
+</section>
+
+<!-- PACING -->
+<section id="pacing" class="sec sec-tint">
+  <div class="wrap">
+    <p class="kicker">H · Kalkulator pacing</p>
+    <h2>Target finish-mu, <em>diterjemahkan per tanjakan</em></h2>
+    <p class="sub">Mode “effort rata” memperlambat pace di tanjakan dan mempercepatnya di turunan, sehingga usahanya tetap sama.</p>
+
+    <form class="calc" id="calc" autocomplete="off">
+      <label>Target finish
+        <div class="hm"><input type="number" id="tH" min="2" max="7" value="5" inputmode="numeric" aria-label="Jam"> <span>jam</span> <input type="number" id="tM" min="0" max="59" value="45" inputmode="numeric" aria-label="Menit"> <span>menit</span></div>
+      </label>
+      <label>Wave
+        <select id="tW"><option value="0">W1 · 04:15</option><option value="1">W2 · 04:20</option><option value="2">W3 · 04:25</option><option value="3" selected>W4 · 04:30</option></select>
+      </label>
+      <label>Antre ke garis start <output id="oD">3 mnt</output>
+        <input type="range" id="tD" min="0" max="15" value="3">
+      </label>
+      <label>Total berhenti (WS, toilet) <output id="oS">10 mnt</output>
+        <input type="range" id="tS" min="0" max="40" value="10">
+      </label>
+      <div class="mode seg-toggle" role="tablist">
+        <button type="button" class="on" data-mode="gap">Effort rata</button>
+        <button type="button" data-mode="even">Pace rata</button>
+      </div>
+    </form>
+
+    <div class="calc-sum" id="calcSum"></div>
+    <canvas id="paceChart" class="pace-chart"></canvas>
+    <div class="grid2 mt">
+      <div class="card"><h3 class="h3">Target per bagian</h3><div class="scroll-x"><table id="secTable"></table></div></div>
+      <div class="card"><h3 class="h3">Split &amp; buffer COT</h3><div class="scroll-x"><table id="splitTable"></table></div></div>
+    </div>
+    <p class="note">Model: tiap +1% kemiringan menambah ±3.3% waktu per km, tiap −1% menghemat ±1.8% (turunan tidak mengembalikan semua yang hilang di tanjakan). Ini perkiraan, bukan janji. Cuaca, keramaian, dan kondisi badan di hari H tetap paling menentukan.</p>
+  </div>
+</section>
+
+<!-- STRATEGI -->
+<section id="strategi" class="sec">
+  <div class="wrap">
+    <p class="kicker">I · Strategi per bagian</p>
+    <h2>Rencana main <em>dari start sampai finish</em></h2>
+    <ol class="timeline" id="timeline"></ol>
+
+    <div class="grid3 mt">
+      <div class="tip c-orange"><h4>Di tanjakan</h4><ul><li>Patokan effort atau napas, bukan pace.</li><li>Langkah dipendekkan, kadens dinaikkan, ayunkan tangan.</li><li>Pandangan 10 m ke depan, bukan ke puncak.</li><li>Jalan cepat 30–60 detik di bagian tercuram itu sah.</li></ul></div>
+      <div class="tip c-blue"><h4>Di turunan</h4><ul><li>Biarkan gravitasi bekerja, jangan mengerem dengan tumit.</li><li>Langkah cepat dan ringan, badan sedikit condong ke depan.</li><li>Km 33 turun rata-rata −2.7% sepanjang 1 km: jaga paha untuk 9 km terakhir.</li><li>Turunan paling tajam (±−4.5%) cuma ±200 m di km 21.6, tepat sebelum T2. Jangan meluncur terlalu kencang.</li></ul></div>
+      <div class="tip c-teal"><h4>Energi</h4><ul><li>Gel ±10 menit <i>sebelum</i> tanjakan: sekitar km 9, 20, 28, 35.</li><li>Minum sedikit-sedikit di tiap WS, jangan menunggu haus.</li><li>Ikuti apa yang sudah teruji saat latihan. Hari H bukan waktunya coba hal baru.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA / FAQ -->
+<section id="faq" class="sec sec-tint">
+  <div class="wrap">
+    <p class="kicker">J · Data &amp; pertanyaan umum</p>
+    <h2>Dari mana angka-angka ini?</h2>
+    <div class="faq">
+      <details open><summary>Sumber datanya apa?</summary><p>File GPX rute Borobudur Marathon dari Garmin Connect (course, Oktober 2025): <span id="mRaw"></span> titik koordinat, semuanya dengan data elevasi. Panjang menurut GPX <span id="mLen"></span> km, lalu jaraknya diskalakan ke 42.195 km resmi agar penanda km cocok dengan papan km di lapangan.</p></details>
+      <details><summary>Kenapa total naiknya beda dengan Strava atau Garmin?</summary><p>Tiap aplikasi menghaluskan elevasi dengan cara berbeda. Dari data mentah GPX ini, total naiknya <span id="mRawGain"></span> m. Setelah dihaluskan (rata-rata bergerak ±250 m) jadi 243 m. Barometer jam tangan saat lomba juga bisa membaca angka lain. Selisih 10–20% itu wajar.</p></details>
+      <details><summary>Kemiringannya dihitung bagaimana?</summary><p>Warna di peta dan grafik memakai kemiringan rata-rata per 300 m. Angka “paling curam” memakai jendela 200 m. Jadi 3.9% artinya rata-rata 3.9% sepanjang ±200 m, bukan lonjakan sesaat di satu titik.</p></details>
+      <details><summary>Apakah rute 2026 sama?</summary><p>GPX ini rute Oktober 2025. Rute Bormar biasanya stabil, tapi selalu cek peta resmi terbaru dari panitia. Kalau ada perubahan, angka di situs ini bisa meleset.</p></details>
+      <details><summary>Kenapa jam tanganku nanti baca lebih dari 42.195 km?</summary><p>GPS hampir selalu membaca lebih panjang karena belokan, zig-zag menyalip, dan sinyal yang memantul. File ini sendiri 42.55 km. Wajar kalau jam tanganmu baca 42.4–42.8 km. Pakai papan km resmi sebagai patokan, bukan auto-lap jam tangan.</p></details>
+      <details><summary>Skala vertikal mana yang “benar”?</summary><p>Kalau digambar 1:1 murni, 42 km dengan beda tinggi 68 m cuma jadi garis rata. “Skala landai” mulai dari 0 m supaya proporsinya terasa, sedangkan “skala detail” sengaja diperbesar untuk melihat lekukannya. Dua-duanya data yang sama.</p></details>
+    </div>
+    <div class="dl">
+      <a class="btn btn-primary" href="bormar-fm.gpx" download>Unduh GPX</a>
+      <a class="btn btn-ghost" href="https://github.com/ryanepwijaya/gpx-bormar" target="_blank" rel="noopener">Kode di GitHub</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>GPX BORMAR</b> · Data GPX diolah dan situs dibuat oleh Claude, digagas oleh Ryan.</p>
+    <p class="small">Situs komunitas tidak resmi, tidak berafiliasi dengan penyelenggara Borobudur Marathon. Peta © kontributor OpenStreetMap, © CARTO.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
