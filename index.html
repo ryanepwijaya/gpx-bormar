@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>GPX Bormar — Bedah Rute Borobudur Marathon FM</title>
-<meta name="description" content="Ulasan interaktif A–Z rute full marathon Borobudur Marathon dari file GPX: peta, profil elevasi, 4 tanjakan utama, kemiringan, cut-off time, dan kalkulator pacing.">
+<meta name="description" content="Ulasan interaktif A–Z rute full marathon Borobudur Marathon dari file GPX: peta, profil elevasi, 4 tanjakan utama, kemiringan, cut-off time, dan hitung jam tiba. Fakta saja, tanpa saran.">
 <meta property="og:title" content="GPX Bormar — Bedah Rute Borobudur Marathon FM">
-<meta property="og:description" content="Peta, elevasi, tanjakan, COT, dan kalkulator pacing rute FM Bormar. Interaktif & ramah HP.">
+<meta property="og:description" content="Peta, elevasi, tanjakan, dan COT rute FM Bormar dari GPX. Interaktif & ramah HP.">
 <meta name="theme-color" content="#16161A">
 <link rel="preload" href="fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
@@ -25,8 +25,8 @@
     <a href="#kemiringan">Kemiringan</a>
     <a href="#perkm">Per km</a>
     <a href="#cot">COT</a>
-    <a href="#pacing">Pacing</a>
-    <a href="#strategi">Strategi</a>
+    <a href="#pacing">Jam tiba</a>
+    <a href="#strategi">Per bagian</a>
     <a href="#faq">FAQ</a>
   </nav>
 </header>
@@ -39,7 +39,7 @@
   <div class="wrap hero-inner">
     <p class="kicker">Borobudur Marathon · Full Marathon 42.195 km</p>
     <h1>Bedah rute <span>dari A sampai Z</span></h1>
-    <p class="lede">Satu file GPX, dibedah tuntas: di mana naiknya, seberapa curam, setinggi apa, kapan cut-off, dan bagaimana mengatur pace. Semua grafik bisa disentuh, digeser, dan dipilih.</p>
+    <p class="lede">Satu file GPX, dibedah tuntas: di mana naiknya, seberapa curam, setinggi apa, dan kapan cut-off. Semua grafik bisa disentuh, digeser, dan dipilih.</p>
     <div class="hero-stats">
       <div><b data-count="243" id="hsGain">0</b><i>m</i><span>total naik</span></div>
       <div><b data-count="298" id="hsHi">0</b><i>m</i><span>titik tertinggi</span></div>
@@ -48,7 +48,7 @@
     </div>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#peta">Jelajahi peta &amp; elevasi</a>
-      <a class="btn btn-ghost" href="#pacing">Hitung pacing-ku</a>
+      <a class="btn btn-ghost" href="#pacing">Hitung jam tiba</a>
     </div>
   </div>
 </section>
@@ -57,14 +57,15 @@
 <section id="ringkas" class="sec">
   <div class="wrap">
     <p class="kicker">A · Ringkasan 30 detik</p>
-    <h2>Rute ini <em>bergelombang landai</em>, bukan berbukit terjal</h2>
+    <h2>Rute ini dalam <em>enam angka</em></h2>
     <p class="sub">Kalau cuma sempat baca satu bagian, baca ini.</p>
+    <div class="notice"><b>Isinya fakta saja.</b> Semua angka di situs ini diolah dari file GPX rute. Tidak ada saran latihan, pacing, atau strategi lomba, karena itu ranahnya coach, dan yang paling kenal tubuhmu ya kamu sendiri.</div>
     <div class="facts">
       <article class="fact c-orange"><b>243 m</b><span>Total naik sepanjang 42 km, dan turunnya sama persis karena start dan finish di titik yang sama.</span></article>
       <article class="fact c-blue"><b>±1%</b><span>Rata-rata kemiringan tanjakan utama. Setara treadmill incline 1.</span></article>
       <article class="fact c-red"><b>3.9%</b><span>Bagian paling curam: ±200 m di awal T2, persis sesudah titik HALF (km ±21.9).</span></article>
-      <article class="fact c-amber"><b>km 10–14</b><span>T1, tanjakan terpanjang (4 km, +45 m), berakhir di titik tertinggi rute.</span></article>
-      <article class="fact c-teal"><b>km 36–41</b><span>T4: naiknya cuma 0.5%, tapi 5.5 km di ujung lomba. Berat di mental, bukan di kemiringan.</span></article>
+      <article class="fact c-amber"><b>km 10–14</b><span>T1: tanjakan dengan total naik terbesar (+45 m dalam 4 km), berakhir di titik tertinggi rute.</span></article>
+      <article class="fact c-teal"><b>km 36–41</b><span>T4: tanjakan terpanjang (5.5 km) dengan kemiringan rata-rata 0.5%, mulai km 35.9.</span></article>
       <article class="fact c-ink"><b>6:30</b><span>Batas finish dihitung dari start wave terakhir (04:30), jadi finish ditutup 11:00 WIB.</span></article>
     </div>
   </div>
@@ -133,10 +134,10 @@
   <div class="wrap">
     <p class="kicker">D · Empat tanjakan utama</p>
     <h2>Kenalan dengan <em>T1, T2, T3, T4</em></h2>
-    <p class="sub">Ketuk kartu untuk menyorotnya di peta. Waktu tempuh dihitung untuk pace sekitar 8:00/km.</p>
+    <p class="sub">Ketuk kartu untuk menyorotnya di peta.</p>
     <div class="climbs" id="climbs"></div>
 
-    <h3 class="h3">Turunan kunci: tempat ambil napas</h3>
+    <h3 class="h3">Turunan terpanjang</h3>
     <div class="descents" id="descents"></div>
   </div>
 </section>
@@ -145,7 +146,7 @@
 <section id="kemiringan" class="sec">
   <div class="wrap">
     <p class="kicker">E · Seberapa curam, setinggi apa</p>
-    <h2>Biar <em>kebayang</em>, bukan biar takut</h2>
+    <h2>Biar <em>kebayang</em> angkanya</h2>
 
     <div class="grid2">
       <div class="card">
@@ -193,19 +194,19 @@
   <div class="wrap">
     <p class="kicker">G · Cut-off time (COT)</p>
     <h2>Dihitung pakai <em>jam dinding</em>, bukan jam tanganmu</h2>
-    <p class="sub">Semua wave memakai jam lomba yang sama, dan batasnya dihitung dari start Wave 4 (04:30 WIB). Jadi makin awal wave-mu, makin longgar waktumu.</p>
+    <p class="sub">Semua wave memakai jam lomba yang sama, dan batasnya dihitung dari start Wave 4 (04:30 WIB). Artinya, wave yang start lebih awal punya waktu lebih panjang sampai tiap cut-off.</p>
     <div class="wave-pick" id="wavePick"></div>
     <div class="scroll-x"><table class="cot-table" id="cotTable"></table></div>
     <p class="note">Sumber: unggahan resmi @borobudur.marathon. Lewat satu cut-off = DNF, ada shuttle bus kembali ke Race Village.</p>
   </div>
 </section>
 
-<!-- PACING -->
+<!-- JAM TIBA -->
 <section id="pacing" class="sec sec-tint">
   <div class="wrap">
-    <p class="kicker">H · Kalkulator pacing</p>
-    <h2>Target finish-mu, <em>diterjemahkan per tanjakan</em></h2>
-    <p class="sub">Mode “effort rata” memperlambat pace di tanjakan dan mempercepatnya di turunan, sehingga usahanya tetap sama.</p>
+    <p class="kicker">H · Hitung jam tiba</p>
+    <h2>Target finish-mu, <em>jam berapa lewat tiap COP?</em></h2>
+    <p class="sub">Hitungan matematis biasa: target waktu dibagi rata ke semua km, lalu dicocokkan dengan jam cut-off. Tidak memperhitungkan tanjakan, cuaca, atau kondisi badan.</p>
 
     <form class="calc" id="calc" autocomplete="off">
       <label>Target finish
@@ -220,34 +221,21 @@
       <label>Total berhenti (WS, toilet) <output id="oS">10 mnt</output>
         <input type="range" id="tS" min="0" max="40" value="10">
       </label>
-      <div class="mode seg-toggle" role="tablist">
-        <button type="button" class="on" data-mode="gap">Effort rata</button>
-        <button type="button" data-mode="even">Pace rata</button>
-      </div>
     </form>
 
     <div class="calc-sum" id="calcSum"></div>
-    <canvas id="paceChart" class="pace-chart"></canvas>
-    <div class="grid2 mt">
-      <div class="card"><h3 class="h3">Target per bagian</h3><div class="scroll-x"><table id="secTable"></table></div></div>
-      <div class="card"><h3 class="h3">Split &amp; buffer COT</h3><div class="scroll-x"><table id="splitTable"></table></div></div>
-    </div>
-    <p class="note">Model: tiap +1% kemiringan menambah ±3.3% waktu per km, tiap −1% menghemat ±1.8% (turunan tidak mengembalikan semua yang hilang di tanjakan). Ini perkiraan, bukan janji. Cuaca, keramaian, dan kondisi badan di hari H tetap paling menentukan.</p>
+    <div class="card mt"><h3 class="h3">Jam tiba &amp; selisih dengan COT</h3><div class="scroll-x"><table id="splitTable"></table></div></div>
+    <p class="note">Ini cuma hitungan, bukan rekomendasi pace atau strategi. Urusan itu ranahnya coach, dan yang paling kenal tubuhmu ya kamu sendiri.</p>
   </div>
 </section>
 
-<!-- STRATEGI -->
+<!-- PROFIL PER BAGIAN -->
 <section id="strategi" class="sec">
   <div class="wrap">
-    <p class="kicker">I · Strategi per bagian</p>
-    <h2>Rencana main <em>dari start sampai finish</em></h2>
+    <p class="kicker">I · Profil per bagian</p>
+    <h2>Rute dari start sampai finish, <em>bagian demi bagian</em></h2>
+    <p class="sub">Angka naik, turun, dan kemiringan tiap bagian rute, dihitung langsung dari GPX.</p>
     <ol class="timeline" id="timeline"></ol>
-
-    <div class="grid3 mt">
-      <div class="tip c-orange"><h4>Di tanjakan</h4><ul><li>Patokan effort atau napas, bukan pace.</li><li>Langkah dipendekkan, kadens dinaikkan, ayunkan tangan.</li><li>Pandangan 10 m ke depan, bukan ke puncak.</li><li>Jalan cepat 30–60 detik di bagian tercuram itu sah.</li></ul></div>
-      <div class="tip c-blue"><h4>Di turunan</h4><ul><li>Biarkan gravitasi bekerja, jangan mengerem dengan tumit.</li><li>Langkah cepat dan ringan, badan sedikit condong ke depan.</li><li>Km 33 turun rata-rata −2.7% sepanjang 1 km: jaga paha untuk 9 km terakhir.</li><li>Turunan paling tajam (±−4.5%) cuma ±200 m di km 21.6, tepat sebelum T2. Jangan meluncur terlalu kencang.</li></ul></div>
-      <div class="tip c-teal"><h4>Energi</h4><ul><li>Gel ±10 menit <i>sebelum</i> tanjakan: sekitar km 9, 20, 28, 35.</li><li>Minum sedikit-sedikit di tiap WS, jangan menunggu haus.</li><li>Ikuti apa yang sudah teruji saat latihan. Hari H bukan waktunya coba hal baru.</li></ul></div>
-    </div>
   </div>
 </section>
 
@@ -261,7 +249,7 @@
       <details><summary>Kenapa total naiknya beda dengan Strava atau Garmin?</summary><p>Tiap aplikasi menghaluskan elevasi dengan cara berbeda. Dari data mentah GPX ini, total naiknya <span id="mRawGain"></span> m. Setelah dihaluskan (rata-rata bergerak ±250 m) jadi 243 m. Barometer jam tangan saat lomba juga bisa membaca angka lain. Selisih 10–20% itu wajar.</p></details>
       <details><summary>Kemiringannya dihitung bagaimana?</summary><p>Warna di peta dan grafik memakai kemiringan rata-rata per 300 m. Angka “paling curam” memakai jendela 200 m. Jadi 3.9% artinya rata-rata 3.9% sepanjang ±200 m, bukan lonjakan sesaat di satu titik.</p></details>
       <details><summary>Apakah rute 2026 sama?</summary><p>GPX ini rute Oktober 2025. Rute Bormar biasanya stabil, tapi selalu cek peta resmi terbaru dari panitia. Kalau ada perubahan, angka di situs ini bisa meleset.</p></details>
-      <details><summary>Kenapa jam tanganku nanti baca lebih dari 42.195 km?</summary><p>GPS hampir selalu membaca lebih panjang karena belokan, zig-zag menyalip, dan sinyal yang memantul. File ini sendiri 42.55 km. Wajar kalau jam tanganmu baca 42.4–42.8 km. Pakai papan km resmi sebagai patokan, bukan auto-lap jam tangan.</p></details>
+      <details><summary>Kenapa jam tanganku nanti baca lebih dari 42.195 km?</summary><p>GPS hampir selalu membaca lebih panjang karena belokan, zig-zag menyalip, dan sinyal yang memantul. File ini sendiri 42.55 km. Wajar kalau jam tangan membaca 42.4–42.8 km. Papan km di lapangan mengikuti pengukuran resmi 42.195 km.</p></details>
       <details><summary>Skala vertikal mana yang “benar”?</summary><p>Kalau digambar 1:1 murni, 42 km dengan beda tinggi 68 m cuma jadi garis rata. “Skala landai” mulai dari 0 m supaya proporsinya terasa, sedangkan “skala detail” sengaja diperbesar untuk melihat lekukannya. Dua-duanya data yang sama.</p></details>
     </div>
     <div class="dl">
@@ -275,6 +263,7 @@
 <footer class="foot">
   <div class="wrap">
     <p><b>GPX BORMAR</b> · Data GPX diolah dan situs dibuat oleh Claude, digagas oleh Ryan.</p>
+    <p class="small">Isinya fakta dari GPX, bukan saran latihan atau strategi. Konsultasikan itu dengan coach-mu.</p>
     <p class="small">Situs komunitas tidak resmi, tidak berafiliasi dengan penyelenggara Borobudur Marathon. Peta © kontributor OpenStreetMap, © CARTO.</p>
   </div>
 </footer>

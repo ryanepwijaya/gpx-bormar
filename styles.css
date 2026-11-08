@@ -283,3 +283,8 @@ td.num,th.num{text-align:right}
 #map.locked{touch-action:pan-y}
 #map.locked .leaflet-control-zoom{opacity:.5}
 .elev,.seg-chart,.pace-chart,.km-svg{overscroll-behavior:auto}
+
+.notice{background:var(--surface);border-left:5px solid var(--teal);border-radius:12px;padding:14px 16px;margin:0 0 20px;box-shadow:var(--shadow);font-size:15px;color:var(--ink-2);max-width:820px}
+.notice b{color:var(--ink)}
+.timeline .facts-line{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px;font:500 13px/1.3 var(--mono);color:var(--muted)}
+.timeline .facts-line b{color:var(--ink)}

@@ -10,8 +10,10 @@ Isi situs:
 - Komposisi medan, slider kemiringan skala asli, perbandingan tinggi (Candi Borobudur, gedung)
 - Naik–turun per km + tabel lengkap
 - Cut-off time per wave
-- Kalkulator pacing (effort rata vs pace rata) lengkap dengan buffer COT
-- Strategi per bagian dan FAQ metodologi
+- Hitung jam tiba (hitungan matematis pace rata) dibandingkan jam COT
+- Profil per bagian dan FAQ metodologi
+
+Isinya fakta dari GPX saja. Tidak ada saran latihan, pacing, atau strategi lomba: itu ranahnya coach, dan yang paling kenal tubuhmu ya kamu sendiri.
 
 ## Struktur
 

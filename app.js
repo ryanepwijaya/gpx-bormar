@@ -49,28 +49,28 @@ function stats(a, b) {
 
 /* ---------- route knowledge ---------- */
 const CLIMBS = [
-  { id: 'T1', a: 10.3, b: 14.3, c: '--orange-deep', note: 'Terpanjang. Mulai tepat sesudah COP1 dan berakhir di titik tertinggi rute (298 m). Makin curam menjelang km 13–14.', tip: 'Pegang effort, bukan pace. Sesudah puncaknya, turunan panjang sampai km 19 sudah menunggu.' },
-  { id: 'T2', a: 21.8, b: 24.9, c: '--red', note: 'Didahului turunan pendek yang tajam (±−4.5%, km 21.6–21.8), lalu langsung naik di bagian paling curam se-rute (±3.9% selama ±200 m). Sesudah itu melandai sampai km 25.', tip: 'Pendekkan langkah sebelum km 22. Jangan terpancing semangat “sudah setengah jalan”.' },
-  { id: 'T3', a: 29.4, b: 31.2, c: '--amber', note: 'Pendek, tapi datang di sekitar km 30, saat kaki dan cadangan energi mulai menipis.', tip: 'Isi energi sekitar km 28. Sesudah puncaknya, km 31–34 turun lagi.' },
-  { id: 'T4', a: 35.9, b: 41.4, c: '--violet', note: 'Hampir tak terasa naik (0.5%), tapi 5.5 km di ujung lomba. Km 40–41 sedikit menanjak sebelum turun ke finish.', tip: 'Pecah jadi target kecil per 1 km. Turunan dari km 41.4 ke finish jadi hadiahnya.' }
+  { id: 'T1', a: 10.3, b: 14.3, c: '--orange-deep', note: 'Tanjakan terpanjang di paruh pertama. Mulai sesudah COP 1 dan berakhir di titik tertinggi rute (298 m) di km 14.3. Bagian paling menanjak ada di km 13–14.' },
+  { id: 'T2', a: 21.8, b: 24.9, c: '--red', note: 'Dimulai sesudah titik HALF. Tepat sebelumnya ada turunan pendek ±−4.5% (km 21.6–21.8), lalu bagian paling menanjak se-rute (±3.9% sepanjang ±200 m), kemudian landai sampai km 24.9.' },
+  { id: 'T3', a: 29.4, b: 31.2, c: '--amber', note: 'Tanjakan terpendek dari empat tanjakan utama, di sekitar km 30. Sesudah puncaknya, rute turun sampai km 33.5.' },
+  { id: 'T4', a: 35.9, b: 41.4, c: '--violet', note: 'Tanjakan terpanjang di rute (5.5 km) dengan rata-rata 0.5%. Bagian lebih menanjak ada di km 40–41, lalu rute turun ke finish.' }
 ];
 const DESC = [
-  { id: 'D1', a: 14.3, b: 18.7, t: 'Panjang & landai, hadiah sesudah T1. Tempat menabung waktu tanpa ngebut.' },
-  { id: 'D2', a: 31.2, b: 33.5, t: 'Km 33 turun rata-rata −2.7% sepanjang 1 km, turunan panjang paling curam. Langkah ringan, jaga paha untuk 9 km terakhir.' }
+  { id: 'D1', a: 14.3, b: 18.7, t: 'Turunan panjang sesudah T1, dari titik tertinggi rute.' },
+  { id: 'D2', a: 31.2, b: 33.5, t: 'Sesudah T3. Km 33 turun rata-rata −2.7% sepanjang 1 km.' }
 ];
 const COPS = [{ n: 'COP 1', km: 10, close: '06:05' }, { n: 'COP 2', km: 20, close: '07:35' }, { n: 'COP 3', km: 34.5, close: '09:50' }, { n: 'FINISH', km: 42.195, close: '11:00' }];
 const WAVES = [{ n: 'W1', t: '04:15' }, { n: 'W2', t: '04:20' }, { n: 'W3', t: '04:25' }, { n: 'W4', t: '04:30' }];
 const SECTIONS = [
-  { a: 0, b: 5, n: 'Start & pemanasan', t: 'flat', d: 'Beberapa gelombang kecil naik-turun. Keramaian start: jangan zig-zag menyalip, biarkan badan panas dulu.' },
-  { a: 5, b: 10.3, n: 'Menuju COP 1', t: 'flat', d: 'Hampir datar dengan naik sangat landai. Temukan ritme. Untuk wave terakhir, buffer COP 1 paling tipis, jadi jangan terlalu santai.' },
-  { a: 10.3, b: 14.3, n: 'T1: tanjakan terpanjang', t: 'up', d: '4 km menuju titik tertinggi rute. Effort, bukan pace. Gel sekitar km 9.' },
-  { a: 14.3, b: 21.8, n: 'Turunan panjang', t: 'down', d: 'Bagian turun terpanjang, diselingi beberapa naik kecil. Tempat menabung waktu, tapi jangan ngebut: separuh lomba belum lewat.' },
-  { a: 21.8, b: 24.9, n: 'T2: pembuka paling curam', t: 'up', d: 'Sesudah HALF ada lembah kecil, lalu naik ±3.9% (±200 m) dan landai sampai km 25. Gel sekitar km 20.' },
-  { a: 24.9, b: 29.4, n: 'Turunan landai', t: 'down', d: 'Pulihkan napas dan atur ulang ritme sebelum masuk 10 km terakhir.' },
-  { a: 29.4, b: 31.2, n: 'T3: pendek di km 30', t: 'up', d: 'Pendek, tapi di sinilah “tembok” sering terasa. Energi sekitar km 28.' },
-  { a: 31.2, b: 35.9, n: 'Turunan km 31–36', t: 'down', d: 'Km 33 paling curam turunnya. Langkah cepat dan pendek, jangan mengerem.' },
-  { a: 35.9, b: 41.4, n: 'T4: naik landai 5.5 km', t: 'up', d: 'Cuma 0.5%, tapi panjang dan di ujung. Pecah per km, fokus ke papan km berikutnya.' },
-  { a: 41.4, b: 42.195, n: 'Turun ke finish', t: 'down', d: 'Sisa tenaga, nikmati. Ini yang kamu latih berbulan-bulan.' }
+  { a: 0, b: 5, n: 'Start', t: 'flat', d: 'Beberapa gelombang kecil naik-turun dari garis start.' },
+  { a: 5, b: 10.3, n: 'Menuju COP 1', t: 'flat', d: 'Cenderung datar dengan naik sangat landai.' },
+  { a: 10.3, b: 14.3, n: 'T1', t: 'up', d: 'Naik menuju titik tertinggi rute (298 m) di km 14.3.' },
+  { a: 14.3, b: 21.8, n: 'Turunan panjang', t: 'down', d: 'Bagian turun terpanjang, diselingi beberapa naik kecil. Melewati COP 2 dan titik HALF.' },
+  { a: 21.8, b: 24.9, n: 'T2', t: 'up', d: 'Diawali bagian paling menanjak se-rute (±3.9%, ±200 m), lalu landai.' },
+  { a: 24.9, b: 29.4, n: 'Turunan landai', t: 'down', d: 'Turun perlahan dengan beberapa gelombang kecil.' },
+  { a: 29.4, b: 31.2, n: 'T3', t: 'up', d: 'Tanjakan pendek di sekitar km 30.' },
+  { a: 31.2, b: 35.9, n: 'Turunan km 31–36', t: 'down', d: 'Km 33 turun rata-rata −2.7%. Melewati COP 3 di km 34.5. Titik terendah rute ada di km 37.2.' },
+  { a: 35.9, b: 41.4, n: 'T4', t: 'up', d: 'Naik landai 5.5 km, sedikit lebih menanjak di km 40–41.' },
+  { a: 41.4, b: 42.195, n: 'Menuju finish', t: 'down', d: 'Turun ke garis finish, di titik yang sama dengan start.' }
 ];
 CLIMBS.forEach(c => Object.assign(c, { s: stats(c.a, c.b) }));
 DESC.forEach(d => Object.assign(d, { s: stats(d.a, d.b) }));
@@ -276,10 +276,10 @@ function spark(c) {
 }
 function climbCmp(g) { const f = Math.round(g / 3); return g >= 30 && g <= 40 ? `≈ setinggi 1 Candi Borobudur (±${f} lantai)` : g > 40 ? `≈ gedung ${f} lantai, sedikit lebih tinggi dari Borobudur` : `≈ gedung ${f} lantai`; }
 function renderClimbs() {
-  $('#climbs').innerHTML = CLIMBS.map(c => { const s = c.s, mins = Math.round(s.dist * 8 * (1 + 0.033 * Math.max(0, s.avg)));
-    return `<button class="climb" data-id="${c.id}" style="--c:${css(c.c)}"><div class="climb-top"><span class="tag">${c.id}</span><span class="rng">km ${c.a}–${c.b}<small>${fmt1(s.dist)} km · ±${mins} menit</small></span>${spark(c)}</div>
+  $('#climbs').innerHTML = CLIMBS.map(c => { const s = c.s;
+    return `<button class="climb" data-id="${c.id}" style="--c:${css(c.c)}"><div class="climb-top"><span class="tag">${c.id}</span><span class="rng">km ${c.a}–${c.b}<small>${fmt1(s.dist)} km · ${Math.round(ELE[idx(c.a)])} → ${Math.round(s.hi)} m</small></span>${spark(c)}</div>
     <div class="climb-nums"><div><b>+${Math.round(s.gain)}</b><span>m naik</span></div><div><b>${fmt1(s.avg)}%</b><span>rata-rata</span></div><div><b>${fmt1(s.maxUp)}%</b><span>paling curam</span></div></div>
-    <span class="cmp">${climbCmp(s.gain)}</span><p>${c.note}</p><p class="tipline"><b>Tips:</b> ${c.tip}</p></button>`; }).join('');
+    <span class="cmp">${climbCmp(s.gain)}</span><p>${c.note}</p></button>`; }).join('');
   $('#descents').innerHTML = DESC.map(d => `<button class="desc" data-id="${d.id}"><span class="k">TURUNAN · KM ${d.a}–${d.b}</span><b>−${Math.round(d.s.loss)} m dalam ${fmt1(d.s.dist)} km</b><span>${d.t}</span></button>`).join('');
 }
 function focusRange(a, b, el) {
@@ -371,56 +371,29 @@ function renderCot() {
 }
 $('#wavePick').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; wave = +b.dataset.w; renderCot(); $('#tW').value = wave; calc(); });
 
-/* ---------- pacing calculator ---------- */
-let mode = 'gap';
-const fGap = g => g >= 0 ? 1 + 0.033 * g : 1 + 0.018 * Math.max(g, -6);
+/* ---------- arrival-time calculator (pure arithmetic, even pace) ---------- */
 function calc() {
   const H = +$('#tH').value || 0, M = +$('#tM').value || 0, tgt = H * 3600 + M * 60, w = +$('#tW').value, delay = +$('#tD').value * 60, stop = +$('#tS').value * 60;
   $('#oD').textContent = `${$('#tD').value} mnt`; $('#oS').textContent = `${$('#tS').value} mnt`;
-  const moving = tgt - stop; if (moving < 3600) { $('#calcSum').innerHTML = '<div class="stat"><b>—</b><small>Target terlalu cepat untuk input ini.</small></div>'; return; }
-  const f = KM.map((_, k) => mode === 'gap' ? fGap(GR[k]) : 1);
-  let wsum = 0; for (let k = 1; k < N; k++) wsum += (KM[k] - KM[k - 1]) * f[k];
-  const p0 = moving / wsum; const cum = [0]; for (let k = 1; k < N; k++) cum.push(cum[k - 1] + (KM[k] - KM[k - 1]) * f[k] * p0);
-  const movAt = km => { const i = idx(km); return cum[i] + (km - KM[i]) * f[Math.min(N - 1, i + 1)] * p0; };
-  const elAt = km => movAt(km) + stop * km / TOT;
-  const start = tsec(WAVES[w].t) + delay;
-  const finWall = start + elAt(TOT), finBuf = tsec('11:00') - finWall;
-  const badge = b => b >= 15 * 60 ? `<span class="badge b-ok">+${Math.round(b / 60)} mnt</span>` : b >= 5 * 60 ? `<span class="badge b-warn">+${Math.round(b / 60)} mnt</span>` : `<span class="badge b-bad">${b >= 0 ? '+' : '−'}${Math.abs(Math.round(b / 60))} mnt</span>`;
+  const moving = tgt - stop; if (moving < 3600) { $('#calcSum').innerHTML = '<div class="stat"><b>—</b><small>Periksa lagi target dan lama berhenti.</small></div>'; $('#splitTable').innerHTML = ''; return; }
+  const pace = moving / TOT, elAt = km => (pace + stop / TOT) * km;
+  const start = tsec(WAVES[w].t) + delay, finWall = start + elAt(TOT), finBuf = tsec('11:00') - finWall;
+  const diff = b => `<span class="badge ${b < 0 ? 'b-bad' : 'b-ok'}">${b >= 0 ? '+' : '−'}${Math.abs(Math.round(b / 60))} mnt</span>`;
   const st = (l, v, c, sm) => `<div class="stat" style="--c:${c}"><span>${l}</span><b>${v}</b>${sm ? `<small>${sm}</small>` : ''}</div>`;
-  $('#calcSum').innerHTML = st('pace rata-rata bergerak', `${mmss(moving / TOT)}/km`, C.orange, `${mode === 'gap' ? `datar-setara ${mmss(p0)}/km` : 'sama di semua km'}`) +
-    st('pace jam tangan*', `${mmss(moving / TOT * TOT / R.meta.gpxLengthKm)}/km`, C.violet, `kalau jam baca ${fmt1(R.meta.gpxLengthKm)} km`) +
-    st('finish (jam dinding)', clock(finWall), C.ink, `start ${clock(start)}`) + st('buffer ke COT finish', `${finBuf >= 0 ? '+' : '−'}${Math.abs(Math.round(finBuf / 60))} mnt`, finBuf >= 900 ? C.teal : finBuf >= 300 ? C.amber : C.red, 'COT finish 11:00');
-  $('#secTable').innerHTML = `<thead><tr><th>Bagian</th><th>Km</th><th class="num">Pace</th><th class="num">Durasi</th></tr></thead><tbody>` + SECTIONS.map(s => { const t = movAt(s.b) - movAt(s.a);
-    return `<tr><td><span style="display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;background:${s.t === 'up' ? C.orange : s.t === 'down' ? C.blue : C.flat}"></span>${s.n}</td><td>${s.a}–${s.b === TOT ? '42.2' : s.b}</td><td class="num"><b>${mmss(t / (s.b - s.a))}</b></td><td class="num">${hm(t).replace(/^0:/, '0:')}</td></tr>`; }).join('') + '</tbody>';
+  $('#calcSum').innerHTML = st('pace rata-rata', `${mmss(pace)}/km`, C.orange, 'waktu bergerak ÷ 42.195 km') +
+    st('di jam tangan', `${mmss(moving / R.meta.gpxLengthKm)}/km`, C.violet, `kalau GPS membaca ${fmt1(R.meta.gpxLengthKm)} km`) +
+    st('finish (jam dinding)', clock(finWall), C.ink, `start ${clock(start)}`) + st('selisih dengan COT finish', `${finBuf >= 0 ? '+' : '−'}${Math.abs(Math.round(finBuf / 60))} mnt`, finBuf >= 0 ? C.teal : C.red, 'COT finish 11:00');
   const marks = [5, 10, 15, 20, 21.1, 25, 30, 34.5, 35, 40, TOT];
-  $('#splitTable').innerHTML = `<thead><tr><th>Km</th><th class="num">Elapsed</th><th class="num">Jam dinding</th><th class="num">COT</th><th class="num">Buffer</th></tr></thead><tbody>` + marks.map(m => { const e = elAt(m), wall = start + e, cop = COPS.find(c => Math.abs(c.km - m) < .01);
-    return `<tr${cop ? ' style="font-weight:600"' : ''}><td>${m === TOT ? 'FINISH' : m}${cop && cop.n !== 'FINISH' ? ` · ${cop.n}` : ''}</td><td class="num">${hm(e)}</td><td class="num">${clock(wall)}</td><td class="num">${cop ? cop.close : '—'}</td><td class="num">${cop ? badge(tsec(cop.close) - wall) : ''}</td></tr>`; }).join('') + '</tbody>';
-  drawPace(f, p0);
-}
-function drawPace(f, p0) {
-  const cv = $('#paceChart'), { g, w, h } = prep(cv), pl = 46, pr = 10, pt = 16, pb = 24;
-  const pace = []; for (let k = 0; k < N; k += 2) { let s = 0, d = 0; for (let j = Math.max(1, k - 10); j <= Math.min(N - 1, k + 10); j++) { s += f[j] * (KM[j] - KM[j - 1]); d += KM[j] - KM[j - 1]; } if (d > 0) pace.push([KM[k], p0 * s / d]); }
-  const pv = pace.map(p => p[1]), mn = Math.min(...pv) - 15, mx = Math.max(...pv) + 15;
-  const pt2 = pt + 10, X = km => pl + km / TOT * (w - pl - pr), Y = v => pt2 + (v - mn) / (mx - mn) * (h - pt2 - pb);
-  const Ye = e => h - pb - (e - 220) / 90 * (h - pt - pb) * .55;
-  g.beginPath(); g.moveTo(X(0), h - pb); for (let k = 0; k < N; k++) g.lineTo(X(KM[k]), Ye(ELE[k])); g.lineTo(X(TOT), h - pb); g.fillStyle = hexA(C.flat, .35); g.fill();
-  g.font = '500 11px "IBM Plex Mono", monospace'; g.textAlign = 'right'; g.textBaseline = 'middle';
-  const tstep = (mx - mn) > 90 ? 30 : 15; for (let v = Math.ceil(mn / tstep) * tstep; v <= mx; v += tstep) { g.strokeStyle = C.line; g.beginPath(); g.moveTo(pl, Y(v)); g.lineTo(w - pr, Y(v)); g.stroke(); g.fillStyle = C.muted; g.fillText(mmss(v), pl - 6, Y(v)); }
-  g.setLineDash([5, 4]); g.strokeStyle = C.violet; g.lineWidth = 1.5; g.beginPath(); g.moveTo(pl, Y(p0)); g.lineTo(w - pr, Y(p0)); g.stroke(); g.setLineDash([]);
-  g.lineWidth = 3; g.lineJoin = 'round'; g.lineCap = 'round';
-  for (let i = 1; i < pace.length; i++) { const slow = pace[i][1] > p0 + 3, fast = pace[i][1] < p0 - 3; g.strokeStyle = slow ? C.orange : fast ? C.blue : C.ink2; g.beginPath(); g.moveTo(X(pace[i - 1][0]), Y(pace[i - 1][1])); g.lineTo(X(pace[i][0]), Y(pace[i][1])); g.stroke(); }
-  g.fillStyle = C.ink2; g.textAlign = 'center'; g.textBaseline = 'alphabetic'; for (let v = 0; v <= 40; v += 5) g.fillText(v, X(v), h - 6);
-  g.textAlign = 'left'; g.fillStyle = C.violet; g.fillText(mode === 'gap' ? `datar-setara ${mmss(p0)}` : `pace rata ${mmss(p0)}`, pl + 6, h - pb - 6);
-  g.fillStyle = C.muted; g.textAlign = 'right'; g.fillText(w > 560 ? 'atas = lebih cepat · oranye = melambat di tanjakan · biru = lebih cepat di turunan' : 'atas = lebih cepat', w - pr, pt - 4);
+  $('#splitTable').innerHTML = `<thead><tr><th>Km</th><th class="num">Waktu</th><th class="num">Jam dinding</th><th class="num">COT</th><th class="num">Selisih</th></tr></thead><tbody>` + marks.map(m => { const e = elAt(m), wall = start + e, cop = COPS.find(c => Math.abs(c.km - m) < .01);
+    return `<tr${cop ? ' style="font-weight:600"' : ''}><td>${m === TOT ? 'FINISH' : m}${cop && cop.n !== 'FINISH' ? ` · ${cop.n}` : ''}</td><td class="num">${hm(e)}</td><td class="num">${clock(wall)}</td><td class="num">${cop ? cop.close : '—'}</td><td class="num">${cop ? diff(tsec(cop.close) - wall) : ''}</td></tr>`; }).join('') + '</tbody>';
 }
 ['#tH', '#tM', '#tW', '#tD', '#tS'].forEach(s => $(s).addEventListener('input', () => { if (s === '#tW') { wave = +$('#tW').value; renderCot(); } calc(); }));
-document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { mode = b.dataset.mode; document.querySelectorAll('[data-mode]').forEach(x => x.classList.toggle('on', x === b)); calc(); }));
 $('#calc').addEventListener('submit', e => e.preventDefault());
 
 /* ---------- strategy timeline ---------- */
 function renderTimeline() {
   $('#timeline').innerHTML = SECTIONS.map(s => { const st = stats(s.a, s.b), col = s.t === 'up' ? C.orange : s.t === 'down' ? C.blue : C.teal;
-    return `<li style="--c:${col}"><div class="km">km ${s.a}–${s.b === TOT ? '42.2' : s.b}<small>+${Math.round(st.gain)} / −${Math.round(st.loss)} m</small></div><div><h4>${s.n}</h4><p>${s.d}</p></div></li>`; }).join('');
+    return `<li style="--c:${col}"><div class="km">km ${s.a}–${s.b === TOT ? '42.2' : s.b}<small>${fmt1(st.dist)} km</small></div><div><h4>${s.n}</h4><p>${s.d}</p><div class="facts-line"><span>naik <b>+${Math.round(st.gain)} m</b></span><span>turun <b>−${Math.round(st.loss)} m</b></span><span>rata-rata <b>${st.avg >= 0 ? '+' : ''}${fmt1(st.avg)}%</b></span><span>tercuram <b>${fmt1(st.maxUp)}%</b></span><span>elevasi <b>${Math.round(ELE[idx(st.a)])}→${Math.round(ELE[idx(st.b)])} m</b></span></div></div></li>`; }).join('');
 }
 
 /* ---------- misc ---------- */
